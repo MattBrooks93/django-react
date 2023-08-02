@@ -59,7 +59,3 @@ def create_reservation(request):
         paid=False
     )
     return JsonResponse({'message': 'Reservation created', 'id': reservation.id})
-
-class TodoView(viewsets.ModelViewSet):
-    serializer_class = BusReservationSystemSerializer
-    queryset = BusReservationSystem.objects.all()
