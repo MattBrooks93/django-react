@@ -1,5 +1,5 @@
 """
-URL configuration for backend project.
+URL configuration for BusReservationSystem project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from backend.BusReservationSystem.views import customer_login, employee_login
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/login/customer', customer_login, name='customer_login'),
+    path('api/login/employee', employee_login, name='employee_login')
 ]
