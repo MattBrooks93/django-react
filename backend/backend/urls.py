@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from backend.BusReservationSystem.views import customer_login, employee_login
+from BusReservationSystem.views import customer_login, employee_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),

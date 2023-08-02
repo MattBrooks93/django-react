@@ -1,11 +1,19 @@
 from django.contrib import admin
 
-from backend import BusReservationSystem
+from .models import City, Bus, Trip, Reservation, Employee, Driver, Host, Station, RestArea, Seat
 
 
 class BusReservationSystemAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'completed')
 
-# Register your models here.
 
-admin.site.register(BusReservationSystem, BusReservationSystemAdmin)
+admin.site.register(City)
+admin.site.register(Bus)
+admin.site.register(Trip)
+admin.site.register(Reservation)
+admin.site.register(Employee)
+admin.site.register(Driver)
+admin.site.register(Host)
+admin.site.register(Station)
+admin.site.register(RestArea)
+admin.site.register(Seat)
