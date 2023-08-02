@@ -1,4 +1,4 @@
-# package instillation 
+# package installation 
 pip install pipenv
 pipenv shell
 pipenv install django
