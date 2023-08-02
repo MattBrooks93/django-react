@@ -26,11 +26,7 @@ from backend.BusReservationSystem.views import customer_login, employee_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
     path('api/', include(router.urls)),
-]
-=======
     path('api/login/customer', customer_login, name='customer_login'),
     path('api/login/employee', employee_login, name='employee_login')
 ]
->>>>>>> abae1e84f41feaed5d1b5eac8b40c0a9a5bad837

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-from rest_framework import viewsets
-from .serializers import BusReservationSystemSerializer
-from .models import Todo
-
-# Create your views here.
-
-class TodoView(viewsets.ModelViewSet):
-    serializer_class = BusReservationSystemSerializer
-    queryset = BusReservationSystem.objects.all()
-=======
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -71,4 +59,7 @@ def create_reservation(request):
         paid=False
     )
     return JsonResponse({'message': 'Reservation created', 'id': reservation.id})
->>>>>>> abae1e84f41feaed5d1b5eac8b40c0a9a5bad837
+
+class TodoView(viewsets.ModelViewSet):
+    serializer_class = BusReservationSystemSerializer
+    queryset = BusReservationSystem.objects.all()
