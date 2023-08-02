@@ -1,7 +1,7 @@
 # package installation 
-pip install pipenv
-pipenv shell
-pipenv install django
+- pip install pipenv
+- pipenv shell
+- pipenv install django
 
 # create admin user
 python manage.py createsuperuser
