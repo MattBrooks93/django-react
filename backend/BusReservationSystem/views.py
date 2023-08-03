@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .models import Customer, Employee
 from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.db import IntegrityError
 
 
 @csrf_exempt
@@ -174,6 +176,41 @@ def cancel_unpaid_reservations():
 
     # Update the fetched reservations to be cancelled
     reservations_to_cancel.update(cancelled=True, cancellation_time=now)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@login_required
+@customer_required
+def update_reservation(request, reservation_id):
+    try:
+        data = json.loads(request.body)
+        num_seats = data.get('numSeats')
+
+        if num_seats is None:
+            return JsonResponse({'error': 'Missing required data'}, status=400)
+
+        try:
+            reservation = Reservation.objects.get(id=reservation_id, user=request.user)
+        except Reservation.DoesNotExist:
+            return JsonResponse({'error': 'Reservation does not exist'}, status=404)
+
+        if reservation.trip.bus.seats < num_seats:
+            return JsonResponse({'error': 'Not enough seats available'}, status=400)
+
+        reservation.seats = num_seats
+        reservation.save()
+
+    except (TypeError, ValueError) as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    except IntegrityError as e:
+        return JsonResponse({'error': 'Database error: ' + str(e)}, status=500)
+    except ValidationError as e:
+        return JsonResponse({'error': 'Validation error: ' + str(e)}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': 'Unexpected error: ' + str(e)}, status=500)
+
+    return JsonResponse({'message': 'Reservation updated', 'id': reservation.id})
 
 
 @employee_required
