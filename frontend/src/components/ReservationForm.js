@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import PaymentForm from './PaymentForm';
 
 function ReservationForm() {
   const [customerName, setCustomerName] = useState('');
   const [tripId, setTripId] = useState('');
   const [numSeats, setNumSeats] = useState(1);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,7 +20,8 @@ function ReservationForm() {
       body: JSON.stringify({
         customerName,
         tripId,
-        numSeats
+        numSeats,
+        paymentComplete
       })
     });
 
@@ -26,47 +30,64 @@ function ReservationForm() {
       setCustomerName('');
       setTripId('');
       setNumSeats(1);
+      
+      // Reset payment completion state
+      setPaymentComplete(false);
     } else {
       // Handle error
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Customer Name:
-        <input
-          type="text"
-          value={customerName}
-          onChange={event => setCustomerName(event.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Trip ID:
-        <input
-          type="text"
-          value={tripId}
-          onChange={event => setTripId(event.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Number of Seats:
-        <input
-          type="number"
-          min="1"
-          value={numSeats}
-          onChange={event => setNumSeats(event.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <button type="submit">Make Reservation</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Customer Name:
+          <input
+            type="text"
+            value={customerName}
+            onChange={event => setCustomerName(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Trip ID:
+          <input
+            type="text"
+            value={tripId}
+            onChange={event => setTripId(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Number of Seats:
+          <input
+            type="number"
+            min="1"
+            value={numSeats}
+            onChange={event => setNumSeats(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Make Reservation</button>
+      </form>
+      {showPaymentForm && (
+        <PaymentForm onPaymentComplete={() => {
+          setShowPaymentForm(false);
+          setPaymentComplete(true);
+        }} />
+      )}
+      {!paymentComplete && (
+        <button onClick={() => setShowPaymentForm(true)}>
+          Prepay for Reservation
+        </button>
+      )}
+    </>
   );
 }
 
 export default ReservationForm;
+
