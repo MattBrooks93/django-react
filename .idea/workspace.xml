@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c8521824-e24b-4c26-b95a-8afbc3266999" name="Changes" comment="implemented signup views for customer and employees">
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.virtualenvs/django-react-OUnY8EOV/Lib/site-packages/django/contrib/auth/base_user.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2TRheSCQ62v7Tg99kFvUmEoBGc2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c8521824-e24b-4c26-b95a-8afbc3266999" name="Changes" comment="" />
+      <created>1691011895323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691011895323</updated>
+    </task>
+    <task id="LOCAL-00001" summary="created models, views and relevant urls">
+      <option name="closed" value="true" />
+      <created>1691012114011</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1691012114011</updated>
+    </task>
+    <task id="LOCAL-00002" summary="registered models and fixed import issue in urls.py">
+      <option name="closed" value="true" />
+      <created>1691015248228</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1691015248228</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Implemented model definitions, intermediate station handling, express trip option, reservation payment/cancellation status, automatic reservation expiry, user authentication, and Django forms">
+      <option name="closed" value="true" />
+      <created>1691034296533</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1691034296533</updated>
+    </task>
+    <task id="LOCAL-00004" summary="implemented signup views for customer and employees">
+      <option name="closed" value="true" />
+      <created>1691085964401</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1691085964401</updated>
+    </task>
+    <task id="LOCAL-00005" summary="implemented signup views for customer and employees">
+      <option name="closed" value="true" />
+      <created>1691086443067</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1691086443067</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created models, views and relevant urls" />
+    <MESSAGE value="registered models and fixed import issue in urls.py" />
+    <MESSAGE value="Implemented model definitions, intermediate station handling, express trip option, reservation payment/cancellation status, automatic reservation expiry, user authentication, and Django forms" />
+    <MESSAGE value="implemented signup views for customer and employees" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented signup views for customer and employees" />
+  </component>
+</project>
