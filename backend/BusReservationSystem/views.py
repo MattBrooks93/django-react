@@ -11,6 +11,31 @@ from .decorators import employee_required, customer_required
 from .forms import ReservationForm, TripForm
 from .models import Reservation, Trip
 from backend.celery import app
+from django.db.models import Sum
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from .models import Customer, Employee
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def employee_signup(request):
+    data = json.loads(request.body)
+    username = data.get('username')
+    password = data.get('password')
+    # You may want to add more fields based on your User model
+
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'error': 'Username already exists'}, status=400)
+
+    user = User.objects.create(
+        username=username,
+        password=make_password(password),
+        # Add more fields here
+    )
+    Employee.objects.create(user=user)
+
+    return JsonResponse({'message': 'Employee created successfully', 'id': user.id})
 
 
 def employee_login(request):
@@ -29,6 +54,27 @@ def employee_login(request):
             return JsonResponse({'error': 'Invalid username or password'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def customer_signup(request):
+    data = json.loads(request.body)
+    username = data.get('username')
+    password = data.get('password')
+    # You may want to add more fields based on your User model
+
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'error': 'Username already exists'}, status=400)
+
+    user = User.objects.create(
+        username=username,
+        password=make_password(password),
+        # Add more fields here
+    )
+    Customer.objects.create(user=user)
+
+    return JsonResponse({'message': 'Customer created successfully', 'id': user.id})
 
 
 @csrf_exempt
@@ -55,15 +101,25 @@ def customer_login(request):
 @login_required
 def create_reservation(request):
     data = json.loads(request.body)
-    customer_name = data.get('customerName')
     trip_id = data.get('tripId')
     num_seats = data.get('numSeats')
 
-    # TODO: Validate the data, e.g. check if the trip exists and has enough seats
+    try:
+        trip = Trip.objects.get(id=trip_id)
+    except Trip.DoesNotExist:
+        return JsonResponse({'error': 'Trip does not exist'}, status=404)
+
+    # Get the total number of seats already reserved for this trip
+    total_reserved_seats = Reservation.objects.filter(trip=trip, cancelled=False).aggregate(total_seats=Sum('seats'))[
+                               'total_seats'] or 0
+
+    # Check if the new reservation would exceed the bus capacity
+    if total_reserved_seats + num_seats > trip.bus.seats:
+        return JsonResponse({'error': 'Not enough seats available'}, status=400)
 
     reservation = Reservation.objects.create(
         user=request.user,
-        trip=Trip.objects.get(id=trip_id),
+        trip=trip,
         seats=num_seats,
         paid=False
     )
@@ -127,16 +183,3 @@ def manage_trips(request):
             return JsonResponse({'message': 'Trip created', 'id': new_trip.id}, status=201)
         else:
             return JsonResponse({'errors': form.errors}, status=400)
-
-
-@customer_required
-@require_http_methods(["POST"])
-def create_reservation(request):
-    form = ReservationForm(json.loads(request.body))
-    if form.is_valid():
-        new_reservation = form.save(commit=False)
-        new_reservation.user = request.user
-        new_reservation.save()
-        return JsonResponse({'message': 'Reservation created', 'id': new_reservation.id}, status=201)
-    else:
-        return JsonResponse({'errors': form.errors}, status=400)

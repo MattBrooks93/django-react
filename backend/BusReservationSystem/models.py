@@ -6,10 +6,11 @@ from django.contrib.auth.models import AbstractUser, Group, Permission, User
 
 def validate_bus_availability(value):
     today = value.date()
-    if Trip.filter(bus=value, departure_time__date=today).exists():
+    last_trip = Trip.objects.filter(bus=value, arrival_time__date=today).order_by('-arrival_time').first()
+    if last_trip and last_trip.arrival_time > value:
         raise ValidationError(
-            _('%(value)s is already scheduled for a trip today.'),
-            params={'value': value},
+            _('Bus %(value)s has a trip that ends after the new trip starts.'),
+            params={'value': value.bus_number},
         )
 
 
@@ -61,6 +62,10 @@ class Trip(models.Model):
                 raise ValidationError("Express trips can't have intermediate stations.")
         super().save(*args, **kwargs)
 
+    def clean(self):
+        if self.departure_time >= self.arrival_time:
+            raise ValidationError("Departure time must be earlier than arrival time.")
+
 
 class TripStation(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
@@ -98,4 +103,5 @@ class RestArea(models.Model):
 class Seat(models.Model):
     number = models.IntegerField()
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservation, on_delete=models.SET_NULL, null=True)
