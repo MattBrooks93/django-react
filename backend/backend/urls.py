@@ -23,8 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/customer', customer_login, name='customer_login'),
     path('api/login/employee', employee_login, name='employee_login'),
-    path('api/register/employee', employee_signup, name='employee_login'),
-    path('api/register/customer', customer_signup, name='customer_login'),
+    path('api/register/employee', employee_signup, name='employee_signup'),
+    path('api/register/customer', customer_signup, name='customer_signup'),
 
     path('api/trips', trips, name='trips'),
     path('api/reservations', reservations, name='reservations'),
