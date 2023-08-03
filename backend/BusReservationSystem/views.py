@@ -163,6 +163,44 @@ def mark_reservation_paid(request, reservation_id):
         return JsonResponse({'error': 'Reservation not found'}, status=404)
 
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def process_payment(request):
+    try:
+        data = json.loads(request.body)
+        card_number = data.get('cardNumber')
+        expiration_date = data.get('expirationDate')
+        cvc = data.get('cvc')
+
+        if not all([card_number, expiration_date, cvc]):
+            return JsonResponse({'error': 'Missing required data'}, status=400)
+
+        if not all([len(card_number) == 16, len(expiration_date) == 4, len(cvc) == 3]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        if not all([card_number.isdigit(), expiration_date.isdigit(), cvc.isdigit()]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        if not all([int(expiration_date[:2]) in range(1, 13), int(expiration_date[2:]) in range(20, 30)]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        if not all([int(cvc) in range(100, 1000)]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        if not all([int(card_number[i]) == int(card_number[i]) for i in range(16)]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        if not all([int(expiration_date[i]) == int(expiration_date[i]) for i in range(4)]):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        # TODO implement the actual logic for processing the payment.
+
+    except Exception as e:
+        return JsonResponse({'error': 'Unexpected error: ' + str(e)}, status=500)
+
+    return JsonResponse({'message': 'Payment processed'})
+
+
 @require_http_methods(["POST"])
 @login_required
 def cancel_reservation(request, reservation_id):
