@@ -23,8 +23,9 @@ function CustomerSignUpForm({ onEmployeeSignUp }) {
     });
 
     if (response.ok) {
+      console.log("response received")
       // Redirect the customer to the reservation form
-      return <Navigate to="./CustomerLoginForm" />;
+      return <Navigate to="./CustomerLoginForm" replace={true}/>;
   } else {
       // Handle error
       console.error("An error occurred while processing the request.");
