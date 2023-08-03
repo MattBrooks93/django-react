@@ -15,6 +15,7 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .models import Customer, Employee
+from django.contrib.auth.hashers import make_password
 
 
 @csrf_exempt
@@ -23,7 +24,6 @@ def employee_signup(request):
     data = json.loads(request.body)
     username = data.get('username')
     password = data.get('password')
-    # You may want to add more fields based on your User model
 
     if User.objects.filter(username=username).exists():
         return JsonResponse({'error': 'Username already exists'}, status=400)
@@ -31,7 +31,6 @@ def employee_signup(request):
     user = User.objects.create(
         username=username,
         password=make_password(password),
-        # Add more fields here
     )
     Employee.objects.create(user=user)
 
@@ -45,7 +44,7 @@ def employee_login(request):
         password = data.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            if user.is_employee:  # Check if the user is an employee
+            if user.is_employee:
                 login(request, user)
                 return JsonResponse({'message': 'Logged in successfully'})
             else:
@@ -62,7 +61,6 @@ def customer_signup(request):
     data = json.loads(request.body)
     username = data.get('username')
     password = data.get('password')
-    # You may want to add more fields based on your User model
 
     if User.objects.filter(username=username).exists():
         return JsonResponse({'error': 'Username already exists'}, status=400)
@@ -70,7 +68,6 @@ def customer_signup(request):
     user = User.objects.create(
         username=username,
         password=make_password(password),
-        # Add more fields here
     )
     Customer.objects.create(user=user)
 
