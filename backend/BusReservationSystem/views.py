@@ -98,26 +98,39 @@ def customer_login(request):
 @login_required
 @customer_required
 def create_reservation(request):
-    data = json.loads(request.body)
-    trip_id = data.get('tripId')
-    num_seats = data.get('numSeats')
-
     try:
-        trip = Trip.objects.get(id=trip_id)
-    except Trip.DoesNotExist:
-        return JsonResponse({'error': 'Trip does not exist'}, status=404)
+        data = json.loads(request.body)
+        trip_id = data.get('tripId')
+        num_seats = data.get('numSeats')
 
-    if trip.bus.seats < num_seats:
-        return JsonResponse({'error': 'Not enough seats available'}, status=400)
+        if not all([trip_id, num_seats]):
+            return JsonResponse({'error': 'Missing required data'}, status=400)
 
-    reservation = Reservation.objects.create(
-        user=request.user,
-        trip=trip,
-        seats=num_seats,
-        paid=False
-    )
+        try:
+            trip = Trip.objects.get(id=trip_id)
+        except Trip.DoesNotExist:
+            return JsonResponse({'error': 'Trip does not exist'}, status=404)
+
+        if trip.bus.seats < num_seats:
+            return JsonResponse({'error': 'Not enough seats available'}, status=400)
+
+        reservation = Reservation.objects.create(
+            user=request.user,
+            trip=trip,
+            seats=num_seats,
+            paid=False
+        )
+
+    except (TypeError, ValueError) as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    except IntegrityError as e:
+        return JsonResponse({'error': 'Database error: ' + str(e)}, status=500)
+    except ValidationError as e:
+        return JsonResponse({'error': 'Validation error: ' + str(e)}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': 'Unexpected error: ' + str(e)}, status=500)
+
     return JsonResponse({'message': 'Reservation created', 'id': reservation.id})
-
 
 
 @require_http_methods(["POST"])
