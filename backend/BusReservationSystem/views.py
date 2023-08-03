@@ -96,6 +96,7 @@ def customer_login(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 @login_required
+@customer_required
 def create_reservation(request):
     data = json.loads(request.body)
     trip_id = data.get('tripId')
@@ -106,12 +107,7 @@ def create_reservation(request):
     except Trip.DoesNotExist:
         return JsonResponse({'error': 'Trip does not exist'}, status=404)
 
-    # Get the total number of seats already reserved for this trip
-    total_reserved_seats = Reservation.objects.filter(trip=trip, cancelled=False).aggregate(total_seats=Sum('seats'))[
-                               'total_seats'] or 0
-
-    # Check if the new reservation would exceed the bus capacity
-    if total_reserved_seats + num_seats > trip.bus.seats:
+    if trip.bus.seats < num_seats:
         return JsonResponse({'error': 'Not enough seats available'}, status=400)
 
     reservation = Reservation.objects.create(
@@ -121,6 +117,7 @@ def create_reservation(request):
         paid=False
     )
     return JsonResponse({'message': 'Reservation created', 'id': reservation.id})
+
 
 
 @require_http_methods(["POST"])
