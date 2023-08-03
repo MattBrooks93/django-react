@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 function CustomerSignUpForm({ onEmployeeSignUp }) {
   const [username, setUsername] = useState('');
@@ -9,7 +10,7 @@ function CustomerSignUpForm({ onEmployeeSignUp }) {
     event.preventDefault();
 
     // Submit the sign-up data to the server
-    const response = await fetch('/api/signup/customer', {
+    const response = await fetch('/api/register/customer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -22,10 +23,12 @@ function CustomerSignUpForm({ onEmployeeSignUp }) {
     });
 
     if (response.ok) {
-      // Redirect the customer to the login page
-    } else {
+      // Redirect the customer to the reservation form
+      return <Navigate to="./CustomerLoginForm" />;
+  } else {
       // Handle error
-    }
+      console.error("An error occurred while processing the request.");
+  }
   };
 
   return (

@@ -8,6 +8,8 @@ python manage.py createsuperuser
 
 # start server
 python manage.py runserver
+~~~
+npm start
 
 # open test app
 http://localhost:8000

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import BusSchedule from './BusSchedule';
+import { Navigate } from 'react-router-dom';
 
 function EmployeeLoginForm() {
   const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ function EmployeeLoginForm() {
     event.preventDefault();
 
     // Submit the login data to the server
-    const response = await fetch('/api/login/employee', {
+    const response = await fetch('http://localhost:8000/api/login/employee', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
