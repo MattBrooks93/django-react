@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PaymentForm from './PaymentForm';
 
-function ReservationForm() {
-  const [customerName, setCustomerName] = useState('');
-  const [tripId, setTripId] = useState('');
-  const [numSeats, setNumSeats] = useState(1);
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const [paymentComplete, setPaymentComplete] = useState(false);
+function ReservationForm({ route }) {
+    const [customerName, setCustomerName] = useState('');
+    const [tripId, setTripId] = useState(route.id);
+    const [numSeats, setNumSeats] = useState(1);
+    const [showPaymentForm, setShowPaymentForm] = useState(false);
+    const [paymentComplete, setPaymentComplete] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

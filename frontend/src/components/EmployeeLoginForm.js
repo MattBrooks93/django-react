@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import BusSchedule from './BusSchedule';
 
 function EmployeeLoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,11 +22,16 @@ function EmployeeLoginForm() {
     });
 
     if (response.ok) {
-      // Redirect the employee to the schedule page
+      // Set isLoggedIn state to true
+      setIsLoggedIn(true);
     } else {
       // Handle error
     }
   };
+
+  if (isLoggedIn) {
+    return <BusSchedule />;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

@@ -1,45 +1,67 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import CustomerLoginForm from './components/CustomerLoginForm';
+import EmployeeLoginForm from './components/EmployeeLoginForm';
+import CustomerSignUpForm from './components/CustomerSignUpForm';
+import EmployeeSignUpForm from './components/EmployeeSignUpForm';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewCompleted: false,
-      todoList: [],
-      modal: false,
-      activeItem: {
-        title: "",
-        description: "",
-        completed: false,
-      },
-    };
-  }
+function App() {
+  const [showCustomerLogin, setShowCustomerLogin] = useState(false);
+  const [showEmployeeLogin, setShowEmployeeLogin] = useState(false);
+  const [showCustomerSignUp, setShowCustomerSignUp] = useState(false);
+  const [showEmployeeSignUp, setShowEmployeeSignUp] = useState(false);
 
-  componentDidMount() {
-    this.refreshList();
-  }
-
-  refreshList = () => {
-    axios
-      .get("/api/todos/")
-      .then((res) => this.setState({ todoList: res.data }))
-      .catch((err) => console.log(err));
-  };
-
-
-  render() {
+  if (showCustomerLogin) {
     return (
-      <main className="container">
-        <h1 className="text-white text-uppercase text-center my-4">bus app</h1>
-        <div className="row">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            
-          </div>
-        </div>
-      </main>
+      <>
+        <button onClick={() => setShowCustomerLogin(false)}>Back</button>
+        <CustomerLoginForm />
+      </>
     );
   }
+
+  if (showEmployeeLogin) {
+    return (
+      <>
+        <button onClick={() => setShowEmployeeLogin(false)}>Back</button>
+        <EmployeeLoginForm />
+      </>
+    );
+  }
+
+  if (showCustomerSignUp) {
+    return (
+      <>
+        <button onClick={() => setShowCustomerSignUp(false)}>Back</button>
+        <CustomerSignUpForm onEmployeeSignUp={() => {
+          setShowCustomerSignUp(false);
+          setShowEmployeeSignUp(true);
+        }} />
+      </>
+    );
+  }
+
+  if (showEmployeeSignUp) {
+    return (
+      <>
+        <button onClick={() => setShowEmployeeSignUp(false)}>Back</button>
+        <EmployeeSignUpForm />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <button onClick={() => setShowCustomerLogin(true)}>
+        Customer Login
+      </button>
+      <button onClick={() => setShowEmployeeLogin(true)}>
+        Employee Login
+      </button>
+      <button onClick={() => setShowCustomerSignUp(true)}>
+        Create Customer Account
+      </button>
+    </>
+  );
 }
 
 export default App;

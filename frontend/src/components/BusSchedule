@@ -1,0 +1,150 @@
+import React, { useState, useEffect } from 'react';
+
+function BusSchedule() {
+  const [schedules, setSchedules] = useState([]);
+  const [newSchedule, setNewSchedule] = useState({
+    departureCity: '',
+    departureTime: '',
+    arrivalCity: '',
+    arrivalTime: '',
+    capacity: ''
+  });
+
+  useEffect(() => {
+    // Fetch schedules data from the server
+    const fetchSchedules = async () => {
+      const response = await fetch('/api/schedules');
+      const data = await response.json();
+      setSchedules(data);
+    };
+    fetchSchedules();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewSchedule(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleAddSchedule = async (event) => {
+    event.preventDefault();
+
+    // Submit the new schedule data to the server
+    const response = await fetch('/api/schedules', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newSchedule)
+    });
+
+    if (response.ok) {
+      // Clear the form fields
+      setNewSchedule({
+        departureCity: '',
+        departureTime: '',
+        arrivalCity: '',
+        arrivalTime: '',
+        capacity: ''
+      });
+      
+      // Fetch updated schedules data from the server
+      const data = await response.json();
+      setSchedules(data);
+    } else {
+      // Handle error
+    }
+  };
+
+  return (
+    <>
+      <h2>Current Schedule</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Departure City</th>
+            <th>Departure Time</th>
+            <th>Arrival City</th>
+            <th>Arrival Time</th>
+            <th>Capacity</th>
+            <th>Reservations</th>
+            <th>Seats Left</th>
+          </tr>
+        </thead>
+        <tbody>
+          {schedules.map(schedule => (
+            <tr key={schedule.id}>
+              <td>{schedule.departureCity}</td>
+              <td>{schedule.departureTime}</td>
+              <td>{schedule.arrivalCity}</td>
+              <td>{schedule.arrivalTime}</td>
+              <td>{schedule.capacity}</td>
+              <td>{schedule.reservations}</td>
+              <td>{schedule.capacity - schedule.reservations}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Add New Schedule</h2>
+      <form onSubmit={handleAddSchedule}>
+        <label>
+          Departure City:
+          <input
+            type="text"
+            name="departureCity"
+            value={newSchedule.departureCity}
+            onChange={handleInputChange}
+            required
+          />
+        </label><br />
+        <label>
+          Departure Time:
+          <input
+            type="datetime-local"
+            name="departureTime"
+            value={newSchedule.departureTime}
+            onChange={handleInputChange}
+            required
+          />
+        </label><br />
+        <label>
+          Arrival City:
+          <input
+            type="text"
+            name="arrivalCity"
+            value={newSchedule.arrivalCity}
+            onChange={handleInputChange}
+            required
+          />
+        </label><br />
+        <label>
+          Arrival Time:
+          <input
+            type="datetime-local"
+            name="arrivalTime"
+            value={newSchedule.arrivalTime}
+            onChange={handleInputChange}
+            required
+          />
+        </label><br />
+        <label>
+          Capacity:
+          <input
+            type="number"
+            min="1"
+            name="capacity"
+            value={newSchedule.capacity}
+            onChange={handleInputChange}
+            required
+          />
+        </label><br />
+        <button type="submit">Add Schedule</button>
+      </form>
+    </>
+  );
+}
+
+export default BusSchedule;
