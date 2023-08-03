@@ -20,6 +20,22 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import IntegrityError
 
 
+def is_employee(user):
+    try:
+        _ = user.employee
+    except Employee.DoesNotExist:
+        return False
+    return True
+
+
+def is_customer(user):
+    try:
+        _ = user.customer
+    except Customer.DoesNotExist:
+        return False
+    return True
+
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def employee_signup(request):
@@ -46,7 +62,7 @@ def employee_login(request):
         password = data.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            if user.is_employee:
+            if is_employee(user):
                 login(request, user)
                 return JsonResponse({'message': 'Logged in successfully'})
             else:
@@ -84,7 +100,7 @@ def customer_login(request):
         password = data.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            if user.is_customer:  # Check if the user is a customer
+            if is_customer(user):
                 login(request, user)
                 return JsonResponse({'message': 'Logged in successfully'})
             else:

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8521824-e24b-4c26-b95a-8afbc3266999" name="Changes" comment="added error handling to create_reservation">
+    <list default="true" id="c8521824-e24b-4c26-b95a-8afbc3266999" name="Changes" comment="added update_reservation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/BusReservationSystem/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/BusReservationSystem/views.py" afterDir="false" />
     </list>
@@ -117,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1691087229336</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added update_reservation">
+      <option name="closed" value="true" />
+      <created>1691087337734</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1691087337734</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,6 +159,7 @@
     <MESSAGE value="implemented password hashing" />
     <MESSAGE value="updated decorator for appropriate access control in create_reservation" />
     <MESSAGE value="added error handling to create_reservation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added error handling to create_reservation" />
+    <MESSAGE value="added update_reservation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added update_reservation" />
   </component>
 </project>
