@@ -39,6 +39,7 @@ def is_customer(user):
 @csrf_exempt
 @require_http_methods(["POST"])
 def employee_signup(request):
+    print(request.body)
     data = json.loads(request.body)
     username = data.get('username')
     password = data.get('password')
@@ -60,9 +61,11 @@ def employee_login(request):
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
+        customer = data.get('is_customer')
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            if is_employee(user):
+            if not customer:
                 login(request, user)
                 return JsonResponse({'message': 'Logged in successfully'})
             else:
@@ -94,13 +97,16 @@ def customer_signup(request):
 
 @csrf_exempt
 def customer_login(request):
+    print(request.body)
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
+        customer = data.get('is_customer')
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
-            if is_customer(user):
+            if customer:
                 login(request, user)
                 return JsonResponse({'message': 'Logged in successfully'})
             else:

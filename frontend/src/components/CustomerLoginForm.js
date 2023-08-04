@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CustomerLoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();  // Add this line
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,13 +23,15 @@ function CustomerLoginForm() {
     });
 
     if (response.ok) {
-      // Redirect the customer to the reservation form
-      return <Navigate to="./Routes" />;
-  } else {
+      // Navigate the customer to the reservation form
+      navigate('/login'); // Assuming the route to login page is '/login'
+      console.log("response received")
+    } else {
       // Handle error
       console.error("An error occurred while processing the request.");
-  }
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit}>

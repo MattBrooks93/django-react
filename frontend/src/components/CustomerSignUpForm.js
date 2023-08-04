@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function CustomerSignUpForm({ onEmployeeSignUp }) {
+function CustomerSignUpForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Submit the sign-up data to the server
     const response = await fetch('/api/register/customer', {
       method: 'POST',
       headers: {
@@ -17,19 +16,16 @@ function CustomerSignUpForm({ onEmployeeSignUp }) {
       },
       body: JSON.stringify({
         username,
-        password,
-        email
+        password
       })
     });
 
     if (response.ok) {
-      console.log("response received")
-      // Redirect the customer to the reservation form
-      return <Navigate to="./CustomerLoginForm" replace={true}/>;
-  } else {
+      navigate('/customer_login');
+    } else {
       // Handle error
       console.error("An error occurred while processing the request.");
-  }
+    }
   };
 
   return (
@@ -55,19 +51,8 @@ function CustomerSignUpForm({ onEmployeeSignUp }) {
           />
         </label>
         <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-            required
-          />
-        </label>
-        <br />
         <button type="submit">Sign Up</button>
       </form>
-      <button onClick={onEmployeeSignUp}>Sign Up as Employee</button>
     </>
   );
 }

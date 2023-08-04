@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
 import json
 
+
 class ViewTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -47,6 +48,7 @@ class ViewTests(TestCase):
         response = self.client.post('/api/reservations/create', json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn('message', response.json())
+
 
 class ModelTests(TestCase):
     def setUp(self):
@@ -95,4 +97,27 @@ class ModelTests(TestCase):
         self.assertIsNone(reservation.cancellation_time)
 
 
-    
+def reserve_seats(self, user, trip, num_seats):
+    if num_seats <= 0:
+        raise ValidationError("Number of seats must be greater than 0")
+
+    if trip.available_seats < num_seats:
+        raise ValidationError("Not enough available seats on the trip")
+
+    reservation = Reservation.objects.create(user=user, trip=trip, seats=num_seats)
+    trip.available_seats -= num_seats
+    trip.save()
+    return reservation
+
+
+def cancel_reservation(self, reservation):
+    if reservation.paid:
+        raise ValidationError("Cannot cancel a paid reservation")
+
+    if reservation.cancelled:
+        raise ValidationError("Reservation is already cancelled")
+
+    reservation.cancelled = True
+    reservation.cancellation_time = datetime.now()
+    reservation.save()
+    return reservation

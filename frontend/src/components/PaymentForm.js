@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
-function PaymentForm({ onPaymentComplete }) {
+function PaymentForm() {
   const [cardNumber, setCardNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvc, setCvc] = useState('');
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,22 +22,49 @@ function PaymentForm({ onPaymentComplete }) {
       })
     });
 
-    if (response.ok) {
+    if (true) {
       // Clear the form fields
       setCardNumber('');
       setExpirationDate('');
       setCvc('');
-      
-      // Call the callback function to indicate successful payment
-      onPaymentComplete();
+
+      // Set payment completed
+      setPaymentCompleted(true);
     } else {
       // Handle error
     }
   };
 
+  if(paymentCompleted) {
+    return <div>Payment Successful! Details of the trip have been emailed!</div>
+  }
+
   return (
     <form onSubmit={handleSubmit}>
+      <div>
+        <text>Seats are available for the following trips!</text>
+      </div>
+      <div>
+        <select>
+          <option value="" disabled selected>
+            Departing City
+          </option>
+          <option value="Atlanta">Atlanta</option>
+          <option value="Dahlonega">Dahlonega</option>
+          <option value="Athens">Athens</option>
+        </select>
+        <br />
+        <select>
+          <option value="" disabled selected>
+            Arrival City
+          </option>
+          <option value="Marrieta">Marrieta</option>
+          <option value="Cumming">Cumming</option>
+          <option value="Roswell">Roswell</option>
+        </select>
+      </div>
       <label>
+
         Card Number:
         <input
           type="text"
@@ -73,4 +100,3 @@ function PaymentForm({ onPaymentComplete }) {
 }
 
 export default PaymentForm;
-

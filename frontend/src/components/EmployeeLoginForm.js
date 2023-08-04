@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import BusSchedule from './BusSchedule';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 function EmployeeLoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,13 +21,15 @@ function EmployeeLoginForm() {
       },
       body: JSON.stringify({
         username,
-        password
+        password,
+        is_customer: false
       })
     });
 
     if (response.ok) {
       // Set isLoggedIn state to true
       setIsLoggedIn(true);
+      navigate('/employee_login');
     } else {
       // Handle error
     }

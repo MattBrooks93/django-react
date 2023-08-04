@@ -1,94 +1,211 @@
-import React, { useState } from 'react';
-import PaymentForm from './PaymentForm';
-import { Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import PaymentForm from "./PaymentForm";
+import { useNavigate } from "react-router-dom";
 
 function ReservationForm({ route }) {
-    const [customerName, setCustomerName] = useState('');
-    const [tripId, setTripId] = useState(route.id);
-    const [numSeats, setNumSeats] = useState(1);
-    const [showPaymentForm, setShowPaymentForm] = useState(false);
-    const [paymentComplete, setPaymentComplete] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [tripId, setTripId] = useState(route?.id || "");
+  const [numSeats, setNumSeats] = useState(1);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const navigate = useNavigate();
 
-    // Submit the reservation data to the server
-    const response = await fetch('/api/reservations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        customerName,
-        tripId,
-        numSeats,
-        paymentComplete
-      })
-    });
-
-    if (response.ok) {
-      // Clear the form fields
-      setCustomerName('');
-      setTripId('');
-      setNumSeats(1);
-      
-      // Reset payment completion state
-      setPaymentComplete(false);
-    } else {
-      // Handle error
-    }
+  const checkSeatAvailability = async (day, timeSlot) => {
+      if (true) {
+        setShowPaymentForm(true);
+      }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Customer Name:
-          <input
-            type="text"
-            value={customerName}
-            onChange={event => setCustomerName(event.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Trip ID:
-          <input
-            type="text"
-            value={tripId}
-            onChange={event => setTripId(event.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Number of Seats:
-          <input
-            type="number"
-            min="1"
-            value={numSeats}
-            onChange={event => setNumSeats(event.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Make Reservation</button>
-      </form>
+      {/* Schedule table */}
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>1:00</th>
+            <th>2:00</th>
+            <th>3:00</th>
+            <th>4:00</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sunday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Sunday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Sunday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Sunday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Sunday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Monday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Monday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Monday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Monday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Monday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+            </tr>
+            <tr>
+            <td>Wednesday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+            </tr>
+            <tr>
+            <td>Thursday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+            </tr>
+            <tr>
+            <td>Friday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+            </tr>
+            <tr>
+            <td>Saturday</td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "11AM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "2PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "5PM")}>
+                Check Availability
+              </button>
+            </td>
+            <td>
+              <button onClick={() => checkSeatAvailability("Tuesday", "9PM")}>
+                Check Availability
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       {showPaymentForm && (
-        <PaymentForm onPaymentComplete={() => {
-          setShowPaymentForm(false);
-          setPaymentComplete(true);
-        }} />
-      )}
-      {!paymentComplete && (
-        <button onClick={() => setShowPaymentForm(true)}>
-          Prepay for Reservation
-        </button>
+        <PaymentForm
+          onPaymentComplete={() => {
+            setShowPaymentForm(false);
+            setPaymentComplete(true);
+          }}
+        />
       )}
     </>
   );
 }
 
 export default ReservationForm;
-
