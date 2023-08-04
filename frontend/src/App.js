@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import CustomerLoginForm from './components/CustomerLoginForm';
 import EmployeeLoginForm from './components/EmployeeLoginForm';
 import CustomerSignUpForm from './components/CustomerSignUpForm';
@@ -49,20 +52,25 @@ function App() {
       </>
     );
   }
-
+  
   return (
     <>
-      <button onClick={() => setShowCustomerLogin(true)}>
-        Customer Login
-      </button>
-      <button onClick={() => setShowEmployeeLogin(true)}>
-        Employee Login
-      </button>
-      <button onClick={() => setShowCustomerSignUp(true)}>
-        Create Customer Account
-      </button>
-    </>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#home">Bus Reservation</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link onClick={() => setShowCustomerLogin(true)}>Customer Login</Nav.Link>
+            <Nav.Link onClick={() => setShowEmployeeLogin(true)}>Employee Login</Nav.Link>
+            <Nav.Link onClick={() => setShowCustomerSignUp(true)}>Create Customer Account</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+
+      {/* The rest of your existing code */}
+      </>
   );
 }
+
 
 export default App;

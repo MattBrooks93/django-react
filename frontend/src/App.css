@@ -36,3 +36,69 @@
     transform: rotate(360deg);
   }
 }
+
+/* Body styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+/* Container styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+button {
+  background-color: #007bff; /* Blue color for the background */
+  color: #fff; /* White color for the text */
+  border: none; /* Remove the border */
+  padding: 10px 20px; /* Add padding around the text */
+  font-size: 16px; /* Set the font size */
+  cursor: pointer; /* Show a pointer cursor on hover */
+  margin-right: 10px; /* Add some space on the right side */
+  margin-bottom: 10px; /* Add some space at the bottom */
+  border-radius: 5px; /* Add rounded corners to the button */
+}
+#customer-login-btn {
+  background-color: #007bff; /* Blue color for the background */
+}
+
+/* Styling for the Employee Login button */
+#employee-login-btn {
+  background-color: #28a745; /* Green color for the background */
+}
+
+/* Styling for the Create Customer Account button */
+#create-customer-account-btn {
+  background-color: #dc3545; /* Red color for the background */
+}
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
